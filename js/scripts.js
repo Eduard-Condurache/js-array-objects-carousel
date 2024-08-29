@@ -22,67 +22,127 @@ const images = [
     }
 ];
 
-const imagesContainer = document.querySelector('.images-container');
+const slidesContainer = document.querySelector('.slides');
 
-images.forEach((item, index) => {
-    
-    imagesContainer.innerHTML += `<h4>${item.title}<h4>`
-    
-    if (index === 0) {
-        imagesContainer.innerHTML += `<img src="${item.image}" class="active">`;
-    } else {
-        imagesContainer.innerHTML += `<img src="${item.image}">`;
+for (let i = 0; i < images.length; i++) {
+
+    let activeClass = '';
+    if (i == 0) {
+        activeClass = 'active';
     }
+    slidesContainer.innerHTML += `
+    <div class="slide-container ${activeClass}">
+        <img src="${images[i].image}" alt="${images[i].title}">
+        <div class="texts">
+            <h3>
+                ${images[i].title}
+            </h3>
+            <p>
+                ${images[i].text}
+            </p>
+        </div>  
+    </div>
+    `;
+}
+
+const allSlides = document.querySelectorAll('.slide-container');
+
+let activeImage = 0;
+
+const nextButton = document.getElementById('next');
+
+nextButton.addEventListener('click', function () {
+    allSlides[activeImage].classList.remove('active');
+
+    if (activeImage < (images.length - 1)) {
+        activeImage++;
+    }
+    else {
+        activeImage = 0;
+    }
+
+    allSlides[activeImage].classList.add('active');
 });
 
+const prevButton = document.getElementById('prev');
 
-const allImages = document.querySelectorAll('.images-container > img');
+prevButton.addEventListener('click', function () {
+    allSlides[activeImage].classList.remove('active');
 
-const nextButton = document.getElementById('next-button');
-
-const prevButton = document.getElementById('prev-button');
-
-
-
-let currentIndex = 0;
-
-nextButton.addEventListener('click',
-    function() {
-        
-        if (currentIndex < (images.length - 1)) {
-            allImages[currentIndex].classList.remove('active');
-
-            currentIndex++;
-
-            allImages[currentIndex].classList.add('active');
-        }
-        else {
-            allImages[currentIndex].classList.remove('active');
-
-            currentIndex = 0;
-
-            allImages[currentIndex].classList.add('active');
-        }
+    if (activeImage > 0) {
+        activeImage--;
     }
+    else {
+        activeImage = images.length - 1;
+    }
+
+    allSlides[activeImage].classList.add('active');
+})
+
+
+
+
+// const imagesContainer = document.querySelector('.images-container');
+
+// images.forEach((item, index) => {
     
-);
+//     imagesContainer.innerHTML += `<h4>${item.title}<h4>`
+    
+//     if (index === 0) {
+//         imagesContainer.innerHTML += `<img src="${item.image}" class="active">`;
+//     } else {
+//         imagesContainer.innerHTML += `<img src="${item.image}">`;
+//     }
+// });
 
-prevButton.addEventListener('click',
-    function() {
-        if (currentIndex > 0) {
-            allImages[currentIndex].classList.remove('active');
 
-            currentIndex--;
+// const allImages = document.querySelectorAll('.images-container > img');
 
-            allImages[currentIndex].classList.add('active');
-        }
+// const nextButton = document.getElementById('next-button');
 
-        else {
-            allImages[currentIndex].classList.remove('active');
+// const prevButton = document.getElementById('prev-button');
 
-            currentIndex = 4;
 
-            allImages[currentIndex].classList.add('active');
-        }
-    }
-);
+
+// let currentIndex = 0;
+
+// nextButton.addEventListener('click',
+//     function() {
+        
+//         if (currentIndex < (images.length - 1)) {
+//             allImages[currentIndex].classList.remove('active');
+
+//             currentIndex++;
+
+//             allImages[currentIndex].classList.add('active');
+//         }
+//         else {
+//             allImages[currentIndex].classList.remove('active');
+
+//             currentIndex = 0;
+
+//             allImages[currentIndex].classList.add('active');
+//         }
+//     }
+    
+// );
+
+// prevButton.addEventListener('click',
+//     function() {
+//         if (currentIndex > 0) {
+//             allImages[currentIndex].classList.remove('active');
+
+//             currentIndex--;
+
+//             allImages[currentIndex].classList.add('active');
+//         }
+
+//         else {
+//             allImages[currentIndex].classList.remove('active');
+
+//             currentIndex = 4;
+
+//             allImages[currentIndex].classList.add('active');
+//         }
+//     }
+// );
